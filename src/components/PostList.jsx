@@ -33,6 +33,8 @@ function PostList({
       onPostClick(post);
     }
   };
+
+ 
   
   const handleTagClick = (e, tag) => {
     e.stopPropagation(); // Éviter de déclencher le clic sur le post
@@ -42,10 +44,19 @@ function PostList({
   };
   
   // TODO: Exercice 1 - Gérer le cas où il n'y a pas de posts
+  if (posts.length === 0 && !loading) {
+    return <div>Aucun post disponible.</div>;
+  }
   
   return (
     <div className="post-list">
       {/* TODO: Exercice 1 - Afficher la liste des posts */}
+      {posts.map((post) => (
+        <div key={post.id} className="post" onClick={() => handlePostClick(post)}>
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+        </div>
+      ))}
       
       {/* Afficher le spinner de chargement */}
       {loading && <LoadingSpinner />}
@@ -53,6 +64,9 @@ function PostList({
       {/* TODO: Exercice 4 - Ajouter la référence pour le défilement infini */}
       
       {/* TODO: Exercice 1 - Ajouter le bouton "Charger plus" pour le mode non-infini */}
+      {!infiniteScroll && hasMore && (
+        <button onClick={onLoadMore}>Charger plus</button>
+      )}
     </div>
   );
 }

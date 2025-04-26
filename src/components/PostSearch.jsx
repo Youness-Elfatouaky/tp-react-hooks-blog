@@ -24,6 +24,12 @@ function PostSearch({
     const value = e.target.value;
     setSearchInput(value);
     onSearch(value);
+    // console.log('Search on')
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput('');
+    onSearch('');
   };
   
   // TODO: Exercice 3 - Appliquer les classes CSS en fonction du thème
@@ -46,6 +52,13 @@ function PostSearch({
               aria-label="Rechercher"
             />
             {/* TODO: Exercice 1 - Ajouter le bouton pour effacer la recherche */}
+            <button
+              className="btn btn-secondary"
+              onClick={handleClearSearch}
+              aria-label="Effacer la recherche"
+            >
+              <i className="bi bi-x"></i>
+            </button>
           </div>
         </div>
         

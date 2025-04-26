@@ -17,30 +17,58 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   const [error, setError] = useState(null);
   
   // TODO: Exercice 1 - Ajouter les états nécessaires pour la pagination
+  const [skip, setSkip] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
   
   // TODO: Exercice 4 - Ajouter l'état pour le post sélectionné
   
   // TODO: Exercice 2 - Utiliser useDebounce pour le terme de recherche
   
   // TODO: Exercice 3 - Utiliser useCallback pour construire l'URL de l'API
-  const buildApiUrl = (skip = 0) => {
-    // Construire l'URL en fonction des filtres
-    return 'https://dummyjson.com/posts';
+  const buildApiUrl = (skip = 0, limit = 10) => {
+    let url = `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`;
+    if (searchTerm.trim() !== '') {
+      const encodedSearch = encodeURIComponent(searchTerm.trim());
+      url = `https://dummyjson.com/posts/search?q=${encodedSearch}`;
+    }
+    return url;
   };
   
   // TODO: Exercice 1 - Implémenter la fonction pour charger les posts
   const fetchPosts = async (reset = false) => {
     try {
       setLoading(true);
-      // Appeler l'API et mettre à jour les états
+      const response = await fetch(buildApiUrl(reset ? 0 : skip, limit));
+      const data = await response.json();
+
+      if (data.posts) {
+        if (reset) {
+          setPosts(data.posts);
+          setSkip(data.posts.length);
+        } else {
+          setPosts((prevPosts) => [...prevPosts, ...data.posts]);
+          setSkip((prevSkip) => prevSkip + data.posts.length);
+        }
+        setHasMore(data.total > (reset ? data.posts.length : skip + data.posts.length));
+      } else {
+        setPosts([]);
+        setHasMore(false);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
+
   
   // TODO: Exercice 1 - Utiliser useEffect pour charger les posts quand les filtres changent
+  useEffect(() => {
+    fetchPosts(true);
+    setSkip(0);
+  }, [searchTerm, tag]);
+
+  
   
   // TODO: Exercice 4 - Implémenter la fonction pour charger plus de posts
   
@@ -52,6 +80,8 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
     posts,
     loading,
     error,
+    hasMore,
+    fetchPosts,
     // Retourner les autres états et fonctions
   };
 }
