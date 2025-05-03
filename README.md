@@ -107,12 +107,16 @@ Cela permet de mémoriser les rendus de ces composants lorsqu’aucune prop pert
 
 **Captures d'écran :** 
 - Blog page avec le bouton ThemeToggle visible
+![blog normale](https://github.com/user-attachments/assets/a6dd3b3a-7047-4845-b7e4-cf1dc704dd38)
 
 - Blog page en mode sombre (dark mode)
+![blog dark](https://github.com/user-attachments/assets/989c950b-13c2-441f-9d34-de6c0a7e51c4)
 
 - Champ de recherche optimisé (déclenche la recherche avec un debounce)
+![search](https://github.com/user-attachments/assets/b1fbaa8f-dc38-449c-8751-5391661f7194)
 
 - Le spinner s’adapte au thème sombre avec une couleur claire
+![spiner white](https://github.com/user-attachments/assets/5e427f46-4aff-4cac-812d-0035fec32a8d)
 
 ### Exercice 4 : Fonctionnalités avancées
 #### Objectif : Ajouter des fonctionnalités de chargement et détail
