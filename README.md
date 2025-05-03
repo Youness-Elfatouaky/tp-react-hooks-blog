@@ -52,11 +52,18 @@ J'ai corrigé en passant `{searchTerm: searchTerm}` à `usePosts()`.
 - [ ] 2.3 Utiliser ces hooks dans l'application
 - [ ] 2.4 Documenter votre solution ici
 
-_Votre réponse pour l'exercice 2 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
+2.1 - J'ai créé le hook `useDebounce` qui utilise un délai de 500ms pour éviter d'appeler l'API à chaque frappe dans le champ de recherche. 
+Il est utilisé dans le hook `usePosts` pour limiter les requêtes inutiles.
+
+2.2 - J'ai créé le hook `useLocalStorage` qui permet de sauvegarder une valeur dans le localStorage.
+Il est utilisé dans `App.jsx` pour mémoriser le mode de défilement choisi par l’utilisateur.
+
+2.3 - Les deux hooks sont utilisés dans l'application :
+- `useDebounce` : dans `usePosts.js`, pour attendre que l’utilisateur ait fini de taper avant de déclencher la recherche.
+- `useLocalStorage` : dans `App.jsx`, pour enregistrer la préférence de scroll (préparation à l'exercice 4) et dans `ThemeContext.js` (préparation exercice 3).
+
+**Difficulté rencontrée :**  
+Le challenge principal a été de bien synchroniser `useDebounce` avec la logique de fetch. J'ai résolu cela avec un `useEffect` propre et bien isolé.
 
 ### Exercice 3 : Optimisation et Context
 #### Objectif : Gérer le thème global et optimiser les rendus

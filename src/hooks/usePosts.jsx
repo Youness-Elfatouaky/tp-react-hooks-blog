@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 // TODO: Exercice 2 - Importer useDebounce
-
+import useDebounce from './useDebounce';
 /**
  * Hook personnalisé pour gérer les posts du blog
  * @param {Object} options - Options de configuration
@@ -23,12 +23,13 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   // TODO: Exercice 4 - Ajouter l'état pour le post sélectionné
   
   // TODO: Exercice 2 - Utiliser useDebounce pour le terme de recherche
+  const debouncedSearch = useDebounce(searchTerm, 500);
   
   // TODO: Exercice 3 - Utiliser useCallback pour construire l'URL de l'API
   const buildApiUrl = (skip = 0, limit = 10) => {
     let url = `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`;
-    if (searchTerm.trim() !== '') {
-      const encodedSearch = encodeURIComponent(searchTerm.trim());
+    if (debouncedSearch.trim() !== '') {
+      const encodedSearch = encodeURIComponent(debouncedSearch.trim());
       url = `https://dummyjson.com/posts/search?q=${encodedSearch}`;
     }
     return url;

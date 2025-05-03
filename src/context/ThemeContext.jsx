@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react';
 // TODO: Exercice 2 - Importer useLocalStorage
+import useLocalStorage from '../hooks/useLocalStorage';
 
 // Créer le contexte
 const ThemeContext = createContext();

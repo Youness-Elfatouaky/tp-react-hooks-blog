@@ -8,6 +8,7 @@ import PostSearch from './components/PostSearch';
 // TODO: Exercice 1 - Importer le hook usePosts
 import usePosts from './hooks/usePosts';
 // TODO: Exercice 2 - Importer le hook useLocalStorage
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
   // État local pour la recherche
@@ -20,6 +21,7 @@ function App() {
   const { posts, loading, error, hasMore } = usePosts( {searchTerm:searchTerm} );
   
   // TODO: Exercice 2 - Utiliser useLocalStorage pour le mode de défilement
+  const [scrollMode, setScrollMode] = useLocalStorage('scrollMode', 'manual');
   
   // TODO: Exercice 3 - Utiliser useCallback pour les gestionnaires d'événements
   
