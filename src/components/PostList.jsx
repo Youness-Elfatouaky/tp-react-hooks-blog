@@ -1,5 +1,6 @@
 import React from 'react';
 // TODO: Exercice 3 - Importer useTheme
+import { useTheme } from '../context/ThemeContext';
 // TODO: Exercice 4 - Importer useIntersectionObserver
 import LoadingSpinner from './LoadingSpinner';
 
@@ -24,7 +25,8 @@ function PostList({
   infiniteScroll = true
 }) {
   // TODO: Exercice 3 - Utiliser le hook useTheme
-  
+  const { isDark } = useTheme();
+
   // TODO: Exercice 4 - Utiliser useIntersectionObserver pour le défilement infini
   
   // TODO: Exercice 3 - Utiliser useCallback pour les gestionnaires d'événements
@@ -49,7 +51,7 @@ function PostList({
   }
   
   return (
-    <div className="post-list">
+    <div className={`post-list ${isDark ? 'bg-dark text-light' : ''}`}>
       {/* TODO: Exercice 1 - Afficher la liste des posts */}
       {posts.map((post) => (
         <div key={post.id} className="post" onClick={() => handlePostClick(post)}>

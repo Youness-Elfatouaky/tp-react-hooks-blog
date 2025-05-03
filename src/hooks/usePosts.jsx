@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo  } from 'react';
 // TODO: Exercice 2 - Importer useDebounce
 import useDebounce from './useDebounce';
+
 /**
  * Hook personnalisé pour gérer les posts du blog
  * @param {Object} options - Options de configuration
@@ -26,14 +27,16 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   const debouncedSearch = useDebounce(searchTerm, 500);
   
   // TODO: Exercice 3 - Utiliser useCallback pour construire l'URL de l'API
-  const buildApiUrl = (skip = 0, limit = 10) => {
+  const buildApiUrl = useCallback((skip = 0, limit = 10) => {
     let url = `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`;
     if (debouncedSearch.trim() !== '') {
       const encodedSearch = encodeURIComponent(debouncedSearch.trim());
       url = `https://dummyjson.com/posts/search?q=${encodedSearch}`;
+    } else if (tag) {
+      url = `https://dummyjson.com/posts/tag/${tag}?limit=${limit}&skip=${skip}`;
     }
     return url;
-  };
+  }, [debouncedSearch, tag]);
   
   // TODO: Exercice 1 - Implémenter la fonction pour charger les posts
   const fetchPosts = async (reset = false) => {
@@ -74,6 +77,13 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   // TODO: Exercice 4 - Implémenter la fonction pour charger plus de posts
   
   // TODO: Exercice 3 - Utiliser useMemo pour calculer les tags uniques
+  const uniqueTags = useMemo(() => {
+    const tagsSet = new Set();
+    posts.forEach((post) => {
+      post.tags?.forEach((t) => tagsSet.add(t));
+    });
+    return Array.from(tagsSet);
+  }, [posts]);
   
   // TODO: Exercice 4 - Implémenter la fonction pour charger un post par son ID
   
@@ -83,6 +93,7 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
     error,
     hasMore,
     fetchPosts,
+    uniqueTags
     // Retourner les autres états et fonctions
   };
 }

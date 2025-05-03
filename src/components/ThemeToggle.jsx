@@ -1,5 +1,14 @@
-export default function ThemeToggle() {
+import React from 'react';
+import { useTheme } from '../context/ThemeContext';
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <div>ThemeToggle à implémenter</div>
-  )
+    <button onClick={toggleTheme} className="btn btn-outline-primary">
+      {theme === 'dark' ? '☀️ Mode clair' : '🌙 Mode sombre'}
+    </button>
+  );
 }
+
+export default ThemeToggle;

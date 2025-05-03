@@ -73,11 +73,46 @@ Le challenge principal a été de bien synchroniser `useDebounce` avec la logiqu
 - [ ] 3.3 Utiliser `useCallback` et `useMemo` pour optimiser les performances
 - [ ] 3.4 Documenter votre solution ici
 
-_Votre réponse pour l'exercice 3 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
+3.1 – Création du `ThemeContext`
+Un `ThemeContext` a été créé pour gérer le thème clair ou sombre globalement.
+Il contient :
+
+- un état ``isDark`` (booléen),
+
+- une fonction ``toggleTheme`` pour changer le thème,
+
+- le tout exposé via un ``ThemeProvider`` autour de l’app.
+
+3.2 – Composant `ThemeToggle`
+Un composant simple (`ThemeToggle`) permet à l’utilisateur de changer dynamiquement le thème. Il utilise le contexte via `useTheme()` pour accéder à `isDark` et `toggleTheme`.
+
+3.3 – Optimisation des performances
+Utilisation de `useCallback` :
+
+Pour éviter que les fonctions de gestion comme `onPostClick`, `onTagClick`, `onSearch`, etc., soient recréées à chaque rendu.
+
+Utilisation de `useMemo` :
+
+Pour calculer les tags uniques à partir des posts si nécessaire (prévu dans Exercice 4).
+
+Pour éviter des recalculs inutiles si les dépendances ne changent pas.
+
+`React.memo` a été appliqué aux composants :
+
+`PostList`
+
+`PostSearch`
+
+Cela permet de mémoriser les rendus de ces composants lorsqu’aucune prop pertinente ne change.
+
+**Captures d'écran :** 
+- Blog page avec le bouton ThemeToggle visible
+
+- Blog page en mode sombre (dark mode)
+
+- Champ de recherche optimisé (déclenche la recherche avec un debounce)
+
+- Le spinner s’adapte au thème sombre avec une couleur claire
 
 ### Exercice 4 : Fonctionnalités avancées
 #### Objectif : Ajouter des fonctionnalités de chargement et détail

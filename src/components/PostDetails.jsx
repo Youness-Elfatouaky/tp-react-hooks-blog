@@ -1,6 +1,6 @@
 import React from 'react';
 // TODO: Exercice 3 - Importer useTheme
-
+import { useTheme } from '../context/ThemeContext';
 /**
  * Composant d'affichage détaillé d'un post
  * @param {Object} props - Propriétés du composant
@@ -10,13 +10,14 @@ import React from 'react';
  */
 function PostDetails({ post, onClose, onTagClick }) {
   // TODO: Exercice 3 - Utiliser le hook useTheme
-  
+  const { isDark } = useTheme();
   // TODO: Exercice 3 - Utiliser useMemo pour calculer les classes CSS
-  const themeClasses = {
-    card: '',
-    badge: '',
-    button: ''
-  };
+  const themeClasses = useMemo(() => ({
+    card: isDark ? 'bg-dark text-white' : '',
+    badge: isDark ? 'bg-secondary' : 'bg-primary',
+    button: isDark ? 'btn-light' : 'btn-dark'
+  }), [isDark]);
+
   
   if (!post) return null;
   
@@ -45,4 +46,4 @@ function PostDetails({ post, onClose, onTagClick }) {
 }
 
 // TODO: Exercice 3 - Utiliser React.memo pour optimiser les rendus
-export default PostDetails;
+export default React.memo(PostDetails);
