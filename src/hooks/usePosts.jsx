@@ -22,7 +22,7 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   const [hasMore, setHasMore] = useState(true);
   
   // TODO: Exercice 4 - Ajouter l'état pour le post sélectionné
-  
+  const [selectedPost, setSelectedPost] = useState(null);
   // TODO: Exercice 2 - Utiliser useDebounce pour le terme de recherche
   const debouncedSearch = useDebounce(searchTerm, 500);
   
@@ -64,7 +64,7 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
       setLoading(false);
     }
   };
-
+ 
   
   // TODO: Exercice 1 - Utiliser useEffect pour charger les posts quand les filtres changent
   useEffect(() => {
@@ -75,7 +75,13 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   
   
   // TODO: Exercice 4 - Implémenter la fonction pour charger plus de posts
-  
+   const loadMore = () => {
+    if (!loading && hasMore) {
+      fetchPosts(false);
+
+    }
+  };
+
   // TODO: Exercice 3 - Utiliser useMemo pour calculer les tags uniques
   const uniqueTags = useMemo(() => {
     const tagsSet = new Set();
@@ -86,6 +92,18 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   }, [posts]);
   
   // TODO: Exercice 4 - Implémenter la fonction pour charger un post par son ID
+  const fetchPostById = async (id) => {
+    try {
+      setLoading(true);
+      const res = await fetch(`https://dummyjson.com/posts/${id}`);
+      const data = await res.json();
+      setSelectedPost(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   return {
     posts,
@@ -93,6 +111,10 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
     error,
     hasMore,
     fetchPosts,
+    loadMore,
+    fetchPostById,
+    selectedPost,  
+    setSelectedPost,    
     uniqueTags
     // Retourner les autres états et fonctions
   };

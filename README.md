@@ -47,10 +47,10 @@ J'ai corrigé en passant `{searchTerm: searchTerm}` à `usePosts()`.
 ### Exercice 2 : Hooks Personnalisés
 #### Objectif : Créer des hooks réutilisables
 
-- [ ] 2.1 Créer le hook `useDebounce` pour optimiser la recherche
-- [ ] 2.2 Créer le hook `useLocalStorage` pour persister les préférences utilisateur
-- [ ] 2.3 Utiliser ces hooks dans l'application
-- [ ] 2.4 Documenter votre solution ici
+- [x] 2.1 Créer le hook `useDebounce` pour optimiser la recherche
+- [x] 2.2 Créer le hook `useLocalStorage` pour persister les préférences utilisateur
+- [x] 2.3 Utiliser ces hooks dans l'application
+- [x] 2.4 Documenter votre solution ici
 
 2.1 - J'ai créé le hook `useDebounce` qui utilise un délai de 500ms pour éviter d'appeler l'API à chaque frappe dans le champ de recherche. 
 Il est utilisé dans le hook `usePosts` pour limiter les requêtes inutiles.
@@ -68,10 +68,10 @@ Le challenge principal a été de bien synchroniser `useDebounce` avec la logiqu
 ### Exercice 3 : Optimisation et Context
 #### Objectif : Gérer le thème global et optimiser les rendus
 
-- [ ] 3.1 Créer le `ThemeContext` pour gérer le thème clair/sombre
-- [ ] 3.2 Implémenter le composant `ThemeToggle`
-- [ ] 3.3 Utiliser `useCallback` et `useMemo` pour optimiser les performances
-- [ ] 3.4 Documenter votre solution ici
+- [x] 3.1 Créer le `ThemeContext` pour gérer le thème clair/sombre
+- [x] 3.2 Implémenter le composant `ThemeToggle`
+- [x] 3.3 Utiliser `useCallback` et `useMemo` pour optimiser les performances
+- [x] 3.4 Documenter votre solution ici
 
 3.1 – Création du `ThemeContext`
 Un `ThemeContext` a été créé pour gérer le thème clair ou sombre globalement.
@@ -121,16 +121,60 @@ Cela permet de mémoriser les rendus de ces composants lorsqu’aucune prop pert
 ### Exercice 4 : Fonctionnalités avancées
 #### Objectif : Ajouter des fonctionnalités de chargement et détail
 
-- [ ] 4.1 Implémenter le chargement infini des posts avec `useIntersectionObserver`
-- [ ] 4.2 Créer le composant `PostDetails` pour afficher les détails d'un post
-- [ ] 4.3 Ajouter la fonctionnalité de filtrage par tags
-- [ ] 4.4 Documenter votre solution ici
+- [x] 4.1 Implémenter le chargement infini des posts avec `useIntersectionObserver`
+- [x] 4.2 Créer le composant `PostDetails` pour afficher les détails d'un post
+- [x] 4.3 Ajouter la fonctionnalité de filtrage par tags
+- [x] 4.4 Documenter votre solution ici
 
-_Votre réponse pour l'exercice 4 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
+4.1 – Chargement infini avec `useIntersectionObserver`  
+Un hook personnalisé `useIntersectionObserver` a été utilisé pour détecter quand l'utilisateur atteint le bas de la liste. Il déclenche automatiquement `onLoadMore()` si :
+
+- le scroll est activé (`infiniteScroll`)
+- il y a encore des posts à charger (`hasMore`)
+- et que le composant n'est pas déjà en train de charger (`!loading`)
+
+Cela permet une expérience fluide, sans bouton "Charger plus".
+
+4.2 – Composant `PostDetails`  
+Un nouveau composant `PostDetails` affiche un post complet lorsque l’utilisateur clique dessus. Il présente :
+
+- Le **titre complet**
+- Le **contenu complet**
+- Les **réactions** (👍 / 👎)
+- L’**ID utilisateur**
+- Les **tags cliquables**
+- Un bouton “Fermer” pour revenir à la liste
+
+Ce composant est optimisé avec `React.memo` pour éviter des rerenders inutiles.
+
+4.3 – Filtrage par tags  
+Chaque post peut contenir des tags. Lorsqu’un tag est cliqué :
+
+- Le tag est stocké dans l’état `selectedTag`
+- Les posts sont filtrés côté API (ou côté client) pour ne garder que ceux contenant ce tag
+- Un bouton permet de **réinitialiser le filtre** en effaçant le tag sélectionné
+
+La gestion du filtre est **compatible avec le mode de chargement infini**.
+
+4.4 – Résumé des optimisations  
+- `useIntersectionObserver` pour la détection automatique du bas de page
+- `useCallback` pour les fonctions `handlePostClick`, `handleTagClick`
+- `React.memo` sur `PostList` et `PostDetails` pour des rendus performants
+- `useMemo` pour extraire la liste des tags uniques sans recalculs inutiles
+
+**Captures d'écran :**  
+- Chargement infini des posts (scroll jusqu’en bas)  
+
+
+- Détails d’un post sélectionné avec réactions et tags  
+
+
+- Filtrage des posts par tag sélectionné (#tech, #code...)  
+
+
+### ✅ Résultat final
+- Une application fluide avec **chargement progressif**, **navigation détaillée**, et **filtrage dynamique par tags**
+- Une expérience optimisée côté utilisateur avec un code modulaire et réutilisable
 
 
 

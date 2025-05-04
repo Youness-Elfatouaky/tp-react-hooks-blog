@@ -75,6 +75,22 @@ function PostSearch({
         </div>
         
         {/* TODO: Exercice 4 - Ajouter le sélecteur de tags */}
+        {availableTags.length > 0 && (
+          <div className="col-md-4">
+            <select
+              className={`form-select ${themeClasses}`}
+              value={selectedTag}
+              onChange={(e) => onTagSelect(e.target.value)}
+            >
+              <option value="">Tous les tags</option>
+              {availableTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  #{tag}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
     </div>
   );

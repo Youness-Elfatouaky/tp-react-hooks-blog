@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import PostList from './components/PostList';
+import PostDetails from './components/PostDetails';
 import PostSearch from './components/PostSearch';
 
 // TODO: Exercice 3 - Importer ThemeToggle
@@ -18,10 +19,14 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   
   // TODO: Exercice 4 - Ajouter l'état pour le tag sélectionné
-  
+  const [selectedTag, setSelectedTag] = useState('');
   // TODO: Exercice 1 - Utiliser le hook usePosts pour récupérer les posts
   // Exemple: const { posts, loading, error } = usePosts();
-  const { posts, loading, error, hasMore } = usePosts( {searchTerm:searchTerm} );
+  const { posts, loading, error, hasMore,loadMore, fetchPosts,
+    uniqueTags,
+    selectedPost,
+    fetchPostById,
+    setSelectedPost } = usePosts( {searchTerm:searchTerm, tag: selectedTag} );
   
   // TODO: Exercice 2 - Utiliser useLocalStorage pour le mode de défilement
   const [scrollMode, setScrollMode] = useLocalStorage('scrollMode', 'manual');
@@ -33,8 +38,21 @@ function App() {
   const handleSearchChange = (term) => {
     setSearchTerm(term);
   };
+  const handlePostClick = (post) => {
+    fetchPostById(post.id);
+  };
+  const handleCloseDetails = () => {
+    setSelectedPost(null);
+  };
   
   // TODO: Exercice 4 - Ajouter le gestionnaire pour la sélection de tag
+
+  const handleTagClick = (tag) => {
+    setSelectedTag(tag);
+    setSelectedPost(null); // Hide details when switching tag
+    // Optional: reset search if you want
+    // setSearchTerm('');
+  };
   
   return (
     <ThemeProvider>
@@ -54,15 +72,36 @@ function App() {
           {error && <div className="alert alert-danger">Erreur : {error}</div>}
           
           {/* TODO: Exercice 4 - Ajouter le composant PostDetails */}
+          {selectedPost && (
+            <PostDetails
+              post={selectedPost}
+              onClose={handleCloseDetails}
+              onTagClick={handleTagClick}
+            />
+          )}
+          {selectedTag && (
+            <div className="alert alert-info d-flex justify-content-between align-items-center">
+              <div>
+                Filtré par le tag : <strong>#{selectedTag}</strong>
+              </div>
+              <button
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => setSelectedTag('')}
+              >
+                Réinitialiser
+              </button>
+            </div>
+          )}
           
           {/* TODO: Exercice 1 - Passer les props nécessaires à PostList */}
           <PostList 
           posts={posts}
           loading={loading}
           hasMore={hasMore}
-          onLoadMore={() => {}} // you will implement this later
-          onPostClick={(post) => console.log(post)}
-          onTagClick={(tag) => console.log(tag)}
+          onLoadMore={loadMore}
+          onPostClick={handlePostClick}
+          onTagClick={handleTagClick}
+      
           infiniteScroll={true}
         />
         </main>
