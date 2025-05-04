@@ -141,7 +141,7 @@ Un nouveau composant `PostDetails` affiche un post complet lorsque l’utilisate
 - Le **titre complet**
 - Le **contenu complet**
 - Les **réactions** (👍 / 👎)
-- L’**ID utilisateur**
+- Les **utilisateurs**
 - Les **tags cliquables**
 - Un bouton “Fermer” pour revenir à la liste
 
