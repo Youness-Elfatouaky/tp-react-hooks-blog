@@ -164,12 +164,15 @@ La gestion du filtre est **compatible avec le mode de chargement infini**.
 
 **Captures d'écran :**  
 - Chargement infini des posts (scroll jusqu’en bas)  
+![scroll infini](https://github.com/user-attachments/assets/45c78348-2a79-42bb-af20-c004b27cb91e)
 
 
 - Détails d’un post sélectionné avec réactions et tags  
+![blog details](https://github.com/user-attachments/assets/147d3888-d3e1-48b0-8d6b-c07cdba29ae2)
 
 
 - Filtrage des posts par tag sélectionné (#tech, #code...)  
+![filter with tag](https://github.com/user-attachments/assets/6df6f7f1-1892-4ec5-9b8e-1cd0bf099bca)
 
 
 ### ✅ Résultat final
